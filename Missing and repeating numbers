@@ -1,0 +1,26 @@
+import java.util.ArrayList;
+
+public class Solution {
+
+    public static int[] missingAndRepeating(ArrayList<Integer> arr, int n) {
+        
+        boolean[] vis = new boolean[n+1];
+        int[] res = new int[2];
+        
+        for(int i: arr){
+            
+            if(vis[i]) res[1] = i;
+            vis[i] = true;
+        }
+        
+        for(int i=1; i<=n; i++){
+            
+            if(!vis[i]){
+                
+                res[0] = i;
+                return res;
+            }
+        }
+        return res;
+    }
+}
