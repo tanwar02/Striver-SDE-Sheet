@@ -1,0 +1,26 @@
+import java.util.* ;
+import java.io.*; 
+import java.util.ArrayList;
+
+public class Solution {
+    
+    public static void rotateMatrix(ArrayList<ArrayList<Integer>> mat, int n, int m) {
+        int r = 0, c = 0;
+        n--;
+        m--;
+        
+        while(n-r > 0 && m-c > 0){
+            
+            int v = mat.get(r).get(c);
+            for(int i=r; i<n; i++) mat.get(i).set(c, mat.get(i+1).get(c));
+            for(int i=c; i<m; i++) mat.get(n).set(i, mat.get(n).get(i+1));
+            for(int i=n; i>r; i--) mat.get(i).set(m, mat.get(i-1).get(m));
+            for(int i=m; i>c+1; i--) mat.get(r).set(i, mat.get(r).get(i-1));
+            mat.get(r).set(c+1, v);
+            r++;
+            c++;
+            n--;
+            m--;
+        }
+   }
+}
