@@ -1,0 +1,44 @@
+import java.util.* ;
+import java.io.*; 
+/***********************************************
+    Following is the class structure of the Node class:
+
+    class Node {
+        int data;
+        Node next;
+
+        Node(int x) {
+            this.data = x;
+            this.next = null;
+        }
+    }
+
+************************************************/
+
+public class Solution {
+    
+    public static Node rotate(Node head, int k) {
+        
+        int l = 0;
+        Node curr = head, last = null;
+        while(curr != null){
+            
+            last = curr;
+            curr = curr.next;
+            l++;
+        }
+        k = k % l;
+        if(k == 0) return head;
+        Node prev = null;
+        curr = head;
+        for(int i=0; i<l-k; i++){
+            
+            prev = curr;
+            curr = curr.next;
+        }
+        last.next = head;
+        prev.next = null;
+        
+        return curr;
+    }
+}
