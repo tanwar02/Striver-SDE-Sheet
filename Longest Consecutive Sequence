@@ -1,0 +1,22 @@
+import java.util.* ;
+import java.io.*; 
+public class Solution {
+    
+    public static int lengthOfLongestConsecutiveSequence(int[] arr, int N) {
+        
+        Arrays.sort(arr);
+        int max = 1, l = 1;
+        
+        for(int i=1; i<arr.length; i++){
+            
+            if(arr[i-1] == arr[i]) continue;
+            if(arr[i-1]+1 == arr[i]) l++;
+            else{
+                
+                max = Math.max(max, l);
+                l = 1;
+            }
+        }
+        return Math.max(max, l);
+    }
+}
