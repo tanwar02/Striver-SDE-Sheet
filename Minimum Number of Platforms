@@ -1,0 +1,21 @@
+import java.util.*;
+
+public class Solution {
+    
+    public static int calculateMinPatforms(int at[], int dt[], int n) {
+        
+        int platform = 0, train = 0;
+        int[][] arr = new int[2360][2];
+        for(int i=0; i<n; i++) arr[at[i]][0]++;
+        for(int i=0; i<n; i++) arr[dt[i]][1]++;
+       
+        for(int i=0; i<2360; i++){
+            
+            train += arr[i][0];
+            platform = Math.max(platform, train);
+            train -= arr[i][1];
+        }
+        
+        return platform;
+    }
+}
