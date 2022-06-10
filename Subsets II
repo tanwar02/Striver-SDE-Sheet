@@ -1,0 +1,49 @@
+import java.util.*;
+
+public class Solution {
+    
+    static ArrayList<ArrayList<Integer>> subsets;
+    public static ArrayList<ArrayList<Integer>> uniqueSubsets(int n, int arr[]) {
+        subsets = new ArrayList<ArrayList<Integer>>();
+        subsets.add(new ArrayList<Integer>());
+        Arrays.sort(arr);
+        uniqueSubsets(arr, n, 0, 0);
+        Collections.sort(subsets, (a, b)->{
+            int i = 0, l = Math.min(a.size(), b.size());
+            while(i < l){
+                if(a.get(i) != b.get(i)) return a.get(i)-b.get(i);
+                i++;
+            }
+            if(i == a.size()) return -1;
+            return 1;
+        });
+        return subsets;
+    }
+    private static void uniqueSubsets(int[] arr, int n, int i, int j){
+        
+        if(j >= n) return;
+        int l = subsets.size();
+        if(arr[i] != arr[j]) i=j;
+        
+        for(int k=0; k<l; k++){
+            
+            if(equals(subsets.get(k), j-i, arr[j])){
+                
+                ArrayList<Integer> list = new ArrayList<>(subsets.get(k));
+                list.add(arr[j]);
+                subsets.add(list);
+            }
+        }
+        uniqueSubsets(arr, n, i, j+1);
+    }
+    private static boolean equals(ArrayList<Integer> list, int k, int element){
+        
+        if(k == 0) return true;
+        for(int i: list){
+            
+            if(i == element) k--;
+            if(k == 0) return true;
+        }
+        return false;
+    }
+}
