@@ -1,0 +1,53 @@
+/*********************************************
+
+    class BinaryTreeNode {
+        int val;
+        BinaryTreeNode left;
+        BinaryTreeNode right;
+
+        BinaryTreeNode(int val) {
+            this.val = val;
+            this.left = null;
+            this.right = null;
+        }
+    }
+
+*********************************************/
+
+import java.util.*;
+
+public class Solution {
+    
+    private static int[][] arr;
+    private static int min;
+    private static int max;
+    public static ArrayList<Integer> bottomView(BinaryTreeNode root) {
+        
+        arr = new int[6000][2];
+        min = Integer.MAX_VALUE;
+        max = Integer.MIN_VALUE;
+        
+        bottomViews(root, 3000, 0);
+        
+        ArrayList<Integer> list = new ArrayList<>();
+        
+        for(int i=min; i<=max; i++) list.add(arr[i][1]);
+        
+        return list;
+    }
+    
+    private static void bottomViews(BinaryTreeNode root, int dis, int level){
+        
+        if(root == null) return;
+        min = Math.min(min, dis);
+        max = Math.max(max, dis);
+        
+        if(arr[dis][0] <= level){
+            
+            arr[dis][0] = level;
+            arr[dis][1] = root.val;
+        }
+        bottomViews(root.left, dis-1, level+1);
+        bottomViews(root.right, dis+1, level+1);
+    }
+}
