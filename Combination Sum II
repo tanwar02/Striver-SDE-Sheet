@@ -1,0 +1,29 @@
+import java.util.*;
+
+public class Solution 
+{
+    static ArrayList<ArrayList<Integer>> list;
+    public static ArrayList<ArrayList<Integer>> combinationSum2(ArrayList<Integer> arr, int n, int target)
+    {
+        list=new ArrayList<>();
+        Collections.sort(arr);
+        BruteForce(0,arr,arr.size(),target,new ArrayList<Integer>());
+        return list;
+    }
+    public static void BruteForce(int index,ArrayList<Integer> arr,int n,int target,ArrayList<Integer>sublist){
+        
+        if(target==0){
+            list.add(new ArrayList<Integer>(sublist));
+        }
+        if(index>=n)
+            return ;
+        for(int i=index;i<arr.size();i++){
+            if(i>index && arr.get(i)==arr.get(i-1))
+                continue;
+            sublist.add(arr.get(i));
+            BruteForce(i+1,arr,n,target-arr.get(i),sublist);
+            sublist.remove(sublist.size()-1);
+        }
+        return ;
+    }
+}
