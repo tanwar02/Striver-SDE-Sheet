@@ -1,0 +1,50 @@
+/************************************************************
+
+    Following is the TreeNode class structure
+
+    class TreeNode<T>
+    {
+       public:
+        T data;
+        TreeNode<T> left;
+        TreeNode<T> right;
+
+        TreeNode(T data)
+        {
+            this.data = data;
+            left = null;
+            right = null;
+        }
+    };
+
+************************************************************/
+
+public class Solution {
+    
+    static int lca;
+    public static int lowestCommonAncestor(TreeNode<Integer> root, int x, int y) {
+        
+        lca = -1;
+        commonAncestor(root, x, y);
+        return lca;
+    }
+    
+    private static boolean[] commonAncestor(TreeNode<Integer> root, int x, int y){
+        
+        if(lca != -1 || root == null) return new boolean[2];
+        boolean[] left = commonAncestor(root.left, x, y);
+        boolean[] right = commonAncestor(root.right, x, y);
+        
+        boolean found_x = left[0] || right[0], found_y = left[1] || right[1];
+        
+        if(root.data == x) found_x = true;
+        if(root.data == y) found_y = true;
+        
+        if(found_x && found_y){
+            
+            lca = root.data;
+            return new boolean[2];
+        }
+        return new boolean[]{found_x, found_y};
+    }
+}
