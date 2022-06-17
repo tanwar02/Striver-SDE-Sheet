@@ -1,0 +1,24 @@
+import java.util.*;
+
+public class Solution {
+
+    // minHeap function which take size of Queries and Queries as Input.
+// Returns an array out outputs depending on the query.
+    static int[] minHeap(int n, int[][] q) {
+        
+        Queue<Integer> pq = new PriorityQueue<>();
+        List<Integer> list = new ArrayList<>();
+        
+        for(int i=0; i<n; i++){
+            
+            if(q[i][0] == 0) pq.add(q[i][1]);
+            else list.add(pq.poll());
+        }
+        
+        int[] arr = new int[list.size()];
+        
+        for(int i=0; i<list.size(); i++) arr[i] = list.get(i);
+        
+        return arr;
+    }
+}
