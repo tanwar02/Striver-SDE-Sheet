@@ -1,0 +1,31 @@
+public class Solution {
+    
+	public static int heightOfTheTree(int[] inOrder, int[] levelOrder, int N){
+		
+        int[] inOrderIndex = new int[N+1];
+        int[] levelOrderIndex = new int[N+1];
+        
+        for(int i=0; i<N; i++){
+            
+            inOrderIndex[inOrder[i]] = i;
+            levelOrderIndex[levelOrder[i]] = i;
+        }
+        
+        return height(inOrder, levelOrder, inOrderIndex, levelOrderIndex, 0, N-1);
+	}
+    
+    private static int height(int[] inOrder, int[] levelOrder, int[] inOrderIndex, int[] levelOrderIndex, int left, int right){
+        
+        if(left >= right) return 0;
+        int root = Integer.MAX_VALUE; // root index in levelOrder traversal.
+        
+        for(int i=left; i<=right; i++){
+            
+            root = Math.min(root, levelOrderIndex[inOrder[i]]);
+        }
+        
+        root = inOrderIndex[levelOrder[root]]; // root index in inOrder trversal.
+        
+        return 1 + Math.max(height(inOrder, levelOrder, inOrderIndex, levelOrderIndex, left, root-1), height(inOrder, levelOrder, inOrderIndex, levelOrderIndex, root+1, right));
+    }
+}
