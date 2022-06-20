@@ -1,0 +1,49 @@
+import java.util.*;
+
+class Solution {
+    
+    static class TrieNode{
+        
+        TrieNode[] child;
+        boolean end;
+        TrieNode(){
+            
+            child = new TrieNode[26];
+            end = false;
+        }
+    }
+    static TrieNode root;
+    public static String completeString(int n, String[] a) {
+        
+        root = new TrieNode();
+        TrieNode curr;
+        for(int i=0; i<a.length; i++){
+            
+            curr = root;
+            for(char ch: a[i].toCharArray()){
+                
+                if(curr.child[ch-'a'] == null) curr.child[ch-'a'] = new TrieNode();
+                curr = curr.child[ch-'a'];
+            }
+            curr.end = true;
+        }
+        Arrays.sort(a, (s1, s2)->s1.length()-s2.length());
+        
+        for(int i=a.length-1; i>=0; i--){
+            
+            if(isPresent(a[i])) return a[i];
+        }
+        return "None";
+    }
+    private static boolean isPresent(String s){
+        
+        TrieNode curr = root;
+        for(char ch: s.toCharArray()){
+            
+            if(curr.child[ch-'a'] == null) return false;
+            curr = curr.child[ch-'a'];
+            if(!curr.end) return false;
+        }
+        return true;
+    }
+}
