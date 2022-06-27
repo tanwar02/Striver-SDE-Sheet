@@ -1,0 +1,40 @@
+public class Solution {
+    
+    public static double median(int[] a, int[] b) {
+    	
+        long l = a.length+b.length;
+        int k = (int)(l/2);
+        if(l%2 == 0) k -= 1;
+        int i=0, j=0;
+        while(i+j < k){
+            
+            if(i == a.length) j++;
+            else if(j == b.length) i++;
+            else if(a[i] < b[j]) i++;
+            else j++;
+        }
+        double median;
+        if(i == a.length){
+            median = b[j];
+            j++;
+        }
+        else if(j == b.length){
+            median = a[i];
+            i++;
+        }
+        else{
+            if(a[i]<b[j]){
+                median = a[i];
+                i++;
+            }
+            else{
+                median = b[j];
+                j++;
+            }
+        }
+        if(l%2 != 0) return median;
+        if(i == a.length) return (median + b[j])/2;
+        if(j == b.length) return (median + a[i])/2;
+        return (median + Math.min(a[i], b[j]))/2;
+    }
+}
