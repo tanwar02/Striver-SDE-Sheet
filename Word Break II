@@ -1,0 +1,33 @@
+import java.util.*;
+
+public class Solution {
+
+    private static Set<String> set;
+	public static ArrayList<String> wordBreak(String s, ArrayList<String> dictionary) {
+        
+        set = new HashSet<>();
+        for(String str: dictionary) set.add(str);
+        return possibleSentences(s, 0);
+	}
+    private static ArrayList<String> possibleSentences(String s, int i){
+        
+        ArrayList<String> list = new ArrayList<>();
+        if(i >= s.length()){
+            list.add("");
+            return list;
+        }
+        String str = "";
+        for(int k=i; k<s.length(); k++){
+            
+            str += s.charAt(k);
+            if(set.contains(str)){
+                
+                ArrayList<String> li = possibleSentences(s, k+1);
+                for(String st: li){
+                    list.add((str + " "+ st).trim());
+                }
+            }
+        }
+        return list;
+    }
+}
