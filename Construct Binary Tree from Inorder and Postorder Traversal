@@ -1,0 +1,53 @@
+/************************************************************
+  
+   Following is the TreeNode class structure
+   
+   class TreeNode<T> { 
+        T data; 
+        TreeNode<T> left;
+        TreeNode<T> right;
+  
+        TreeNode(T data) { 
+            this.data = data; 
+            left = null; 
+            right = null; 
+        }
+   }
+    
+ ************************************************************/
+
+public class Solution {
+    
+    static int k;
+	public static TreeNode<Integer> getTreeFromPostorderAndInorder(int[] postOrder, int[] inOrder) {
+		
+        Integer[] index = new Integer[100001];
+        k = postOrder.length;
+        
+        for(int i=0; i<inOrder.length; i++) index[inOrder[i]] = i;
+        
+        return constructBinaryTree(postOrder, inOrder, index, postOrder.length-1, 0, inOrder.length-1);
+	}
+    
+    private static TreeNode<Integer> constructBinaryTree(int[] post, int[] in, Integer[] index, int end, int left, int right){
+        
+        if(left > right) return null;
+        
+        int r = -1, i = k;
+        
+        for(; i>0; i--){
+            
+            if(index[i] != null){
+                
+                r = index[i];
+                break;
+            }
+        }
+        k = i-1;
+        TreeNode<Integer> root = new TreeNode(in[r]);
+        root.right = constructBinaryTree(post, in, index, i-1, r+1, right);
+        root.left = constructBinaryTree(post, in, index, i-1, left, r-1);
+        
+        return root;
+    }
+}
