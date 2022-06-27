@@ -1,0 +1,36 @@
+import java.util.*;
+
+public class Solution {
+    
+    private static int binarySearch(List<Integer> list, int p){
+        
+        int low = 0, high = list.size()-1, mid, pos = -1;
+        while(low <= high){
+            
+            mid = (low+high)/2;
+            if(list.get(mid) < p) low = mid+1;
+            else{
+                pos = mid;
+                high = mid-1;
+            }
+        }
+        return pos;
+    }
+	public static void findMedian(int arr[])  {
+        
+        if(arr.length == 0) return;
+        List<Integer> list = new ArrayList<>();
+        list.add(arr[0]);
+        System.out.print(arr[0]);
+        for(int i=1; i<arr.length; i++){
+            
+            if(list.get(i-1) <= arr[i]) list.add(arr[i]);
+            else{
+                int pos = binarySearch(list, arr[i]);
+                list.add(pos, arr[i]);
+            }
+            if(i%2 == 0) System.out.print(" "+list.get(i/2));
+            else System.out.print(" "+(list.get(i/2) + list.get(i/2+1))/2);
+        }
+    }
+}
