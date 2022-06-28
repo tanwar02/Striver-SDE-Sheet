@@ -1,0 +1,46 @@
+public class Trie {
+    
+    static class TrieNode{
+        
+        TrieNode[] child;
+        boolean end;
+        TrieNode(){
+            child = new TrieNode[26];
+            end = false;
+        }
+    }
+    static TrieNode root;
+    Trie() {
+        root = new TrieNode();
+    }
+
+    public static void insert(String word) {
+        
+        TrieNode curr = root;
+        for(char ch: word.toCharArray()){
+            if(curr.child[ch-'a'] == null) curr.child[ch-'a'] = new TrieNode();
+            curr = curr.child[ch-'a'];
+        }
+        curr.end = true;
+    }
+
+    public static boolean search(String word) {
+        
+        TrieNode curr = root;
+        for(char ch: word.toCharArray()){
+            if(curr.child[ch-'a'] == null) return false;
+            curr = curr.child[ch-'a'];
+        }
+        return curr.end;
+    }
+
+    public static boolean startsWith(String prefix) {
+        
+        TrieNode curr = root;
+        for(char ch: prefix.toCharArray()){
+            if(curr.child[ch-'a'] == null) return false;
+            curr = curr.child[ch-'a'];
+        }
+        return true;
+    }
+}
