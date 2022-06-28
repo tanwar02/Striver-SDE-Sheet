@@ -1,0 +1,36 @@
+import java.util.*;
+
+public class Solution {
+    
+    public static int[] maxMinWindow(int[] a, int n) {
+        
+        int[] left_min = new int[n];
+        int[] right_min = new int[n];
+        Stack<Integer> st = new Stack<>();
+        for(int i=0; i<n; i++){
+          
+            while(!st.empty() && a[st.peek()] >= a[i]) st.pop();
+            if(st.empty()) left_min[i] = -1;
+            else left_min[i] = st.peek();
+            st.push(i);
+        }
+        st.clear();
+        for(int i=n-1; i>=0; i--){
+            
+            while(!st.empty() && a[st.peek()] >= a[i]) st.pop();
+            if(st.empty()) right_min[i] = n;
+            else right_min[i] = st.peek();
+            st.push(i);
+        }
+        int[] arr = new int[n];
+        Arrays.fill(arr, -1000000000);
+        for(int i=0; i<n; i++){
+            
+            int size = right_min[i] - left_min[i] - 1; // size of the window for which a[i] is the minimum because all the elements (left_min[i], right_min[i]) are greater than or equal to the current element.
+            arr[size-1] = Math.max(arr[size-1], a[i]);
+        }
+        for(int i=n-2; i>=0; i--) arr[i] = Math.max(arr[i], arr[i+1]); // Suppose if there is no window size for which a[i] is the minimum, maximum value of window size i always will be greater than or equal to the maximum value of the window size (i+1).
+        return arr;
+    }
+}
+
