@@ -1,0 +1,59 @@
+/************************************************************
+
+    Following is the TreeNode class structure
+
+    class TreeNode<T> 
+    {
+       public:
+        T data;
+        TreeNode<T> left;
+        TreeNode<T> right;
+
+        TreeNode(T data) 
+        {
+            this.data = data;
+            left = null;
+            right = null;
+        }
+    };
+
+************************************************************/
+
+
+public class Solution 
+{
+    public static String serializeTree(TreeNode<Integer> root)
+    {
+        StringBuilder sb = new StringBuilder();
+        serialized(root, sb);
+        return sb.toString().trim();
+    }
+    private static void serialized(TreeNode<Integer> root, StringBuilder sb){
+        
+        if(root == null){
+            
+            sb.append(" 0");
+            return;
+        }
+        sb.append(" "+root.data);
+        serialized(root.left, sb);
+        serialized(root.right, sb);
+    }
+    
+    public static TreeNode<Integer> deserializeTree(String str)
+    {
+        String[] s = str.split(" ");
+        int[] arr = new int[s.length];
+        for(int i=0; i<arr.length; i++) arr[i] = Integer.valueOf(s[i]);
+        return deserialized(arr, new int[]{-1});
+    }
+    private static TreeNode<Integer> deserialized(int[] arr, int[] i){
+        
+        i[0]++;
+        if(arr[i[0]] == 0) return null;
+        TreeNode<Integer> root = new TreeNode<>(arr[i[0]]);
+        root.left = deserialized(arr, i);
+        root.right = deserialized(arr, i);
+        return root;
+    }
+}
