@@ -1,0 +1,55 @@
+/************************************************************
+
+    Following is the Binary Tree node structure:
+    
+   class TreeNode {
+	    int data;
+	    TreeNode left;
+	    TreeNode right;
+
+	    TreeNode(int data) {
+		    this.data = data;
+		    this.left = null;
+		    this.right = null;
+	    }
+
+    }
+
+************************************************************/
+
+import java.util.*;
+
+public class Solution {
+    
+    static ArrayList<Integer> list;
+    static List<Integer> right;
+	public static ArrayList<Integer> traverseBoundary(TreeNode root){
+		
+        list = new ArrayList<>();
+        right = new ArrayList<>();
+        list.add(root.data);
+        leftBoundryTraversal(root.left, true);
+        rightBoundryTraversal(root.right, true);
+        Collections.reverse(right);
+        list.addAll(right);
+        return list;
+	}
+    static void leftBoundryTraversal(TreeNode root, boolean boundry){
+        
+        if(root == null) return;
+        if(root.left == null && root.right == null) list.add(root.data);
+        else if(boundry) list.add(root.data);
+        leftBoundryTraversal(root.left, boundry);
+        if(root.left == null) leftBoundryTraversal(root.right, boundry);
+        else leftBoundryTraversal(root.right, false);
+    }
+    static void rightBoundryTraversal(TreeNode root, boolean boundry){
+        
+        if(root == null) return;
+        if(root.left == null && root.right == null) right.add(root.data);
+        else if(boundry) right.add(root.data);
+        rightBoundryTraversal(root.right, boundry);
+        if(root.right == null) rightBoundryTraversal(root.left, boundry);
+        else rightBoundryTraversal(root.left, false);
+    }
+}
