@@ -1,0 +1,57 @@
+import java.util.*;
+
+public class LFUCache {
+    
+    Queue<int[]> pq; // key, value, frequency and time
+    Map<Integer, int[]> map;
+    int capacity, time;
+	LFUCache(int capacity) {
+		
+        this.capacity = capacity;
+        time = 0;
+        map = new HashMap<>();
+        pq = new PriorityQueue<>((a, b)->{
+            if(a[2] == b[2]) return a[3]-b[3];
+            return a[2]-b[2];
+        });
+	}
+
+	int get(int key) {
+		
+        if(!map.containsKey(key)) return -1;
+        int[] arr = map.get(key);
+        arr[2] += 1;
+        return arr[1];
+	}
+
+	void put(int key, int value) {
+		
+        if(map.containsKey(key)){
+            
+            int[] arr = map.get(key);
+            arr[1] = value;
+            arr[2] += 1;
+        }
+        else{
+            
+            int[] arr;
+            if(map.size() == capacity){
+                
+                arr = pq.peek();
+                map.remove(arr[0]);
+                map.put(key, arr);
+            }
+            else{
+                
+                arr = new int[4];
+                map.put(key, arr);
+                pq.add(arr);
+            }
+            arr[0] = key;
+            arr[1] = value;
+            arr[2] = 0;
+            arr[3] = time;
+            time++;
+        }
+	}
+}
