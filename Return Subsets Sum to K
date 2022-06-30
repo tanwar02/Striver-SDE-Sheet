@@ -1,0 +1,23 @@
+import java.util.*;
+
+public class Solution {
+    
+    static ArrayList<ArrayList<Integer>> list;
+    public static ArrayList<ArrayList<Integer>> findSubsetsThatSumToK(ArrayList<Integer> arr, int n, int k) 
+	{
+        list = new ArrayList<>();
+        subsequence(arr, 0, n, k, new ArrayList<>());
+        return list;
+    }
+    private static void subsequence(ArrayList<Integer> arr, int i, int n, int k, ArrayList<Integer> seq){
+        
+        if(i >= n){
+            if(k == 0) list.add(seq);
+            return;
+        }
+        subsequence(arr, i+1, n, k, seq);  // exclude => skip
+        ArrayList<Integer> include = new ArrayList<>(seq);
+        include.add(arr.get(i));
+        subsequence(arr, i+1, n, k-arr.get(i), include);
+    }
+}
