@@ -1,0 +1,51 @@
+import java.util.*;
+
+public class Solution {
+    
+    private static List<List<String>>[] dp;
+    public static List<List<String>> partition(String s) {
+        
+        if(s.length() == 0){
+            List<List<String>> list = new ArrayList<>();
+            System.out.println(list);
+            return list;
+        }
+        dp = new ArrayList[s.length()];
+        return palindromePartition(s, 0, s.length());
+    }
+    private static List<List<String>> palindromePartition(String s, int i, int l){
+        
+        if(dp[i] != null) return dp[i];
+        List<List<String>> palindrome = new ArrayList<>();
+        for(int k=i; k<l; k++){
+            
+            if(!isPalindrome(s, i, k)) continue;
+            if(k == l-1){
+                
+                List<String> list = new ArrayList<>();
+                list.add(s.substring(i, l));
+                palindrome.add(list);
+                break;
+            }
+            List<List<String>> list = palindromePartition(s, k+1, l);
+            for(List<String> l1: list){
+                
+                List<String> l2 = new ArrayList<>();
+                l2.add(s.substring(i, k+1));
+                l2.addAll(l1);
+                palindrome.add(l2);
+            }
+        }
+        return dp[i] = palindrome;
+    }
+    private static boolean isPalindrome(String s, int i, int j){
+        
+        while(i < j){
+            
+            if(s.charAt(i) != s.charAt(j)) return false;
+            i++;
+            j--;
+        }
+        return true;
+    }
+}
