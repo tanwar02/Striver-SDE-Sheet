@@ -1,0 +1,31 @@
+public class Solution {
+
+	public static boolean isItSudoku(int matrix[][]) {
+        
+        for(int i=0; i<9; i++){
+            
+            for(int j=0; j<9; j++){
+                
+                if(matrix[i][j] != 0) continue;
+                for(int n=1; n<=9; n++){
+                    
+                    if(!canPlaced(matrix, i, j, n)) continue;
+                    matrix[i][j] = n;
+                    if(isItSudoku(matrix)) return true;
+                    matrix[i][j] = 0;
+                }
+                return false;
+            }
+        }
+        return true;
+	}
+    private static boolean canPlaced(int[][] matrix, int r, int c, int n){
+        
+        for(int i=0; i<9; i++){
+            
+            if(matrix[r][i] == n || matrix[i][c] == n) return false;
+            if(matrix[3*(r/3)+i/3][3*(c/3)+i%3] == n) return false;
+        }
+        return true;
+    }
+}
