@@ -1,0 +1,34 @@
+import java.util.*;
+
+public class Solution {
+    
+    static ArrayList<ArrayList<Integer>> path;
+    public static ArrayList<ArrayList<Integer>> ratInAMaze(int[][] maze, int n) {
+        
+        path = new ArrayList<>();
+        AllPaths(maze, 0, 0, n-1, new int[n][n]);
+        return path;
+    }
+    private static void AllPaths(int[][] maze, int i, int j, int n, int[][] arr){
+        
+        if(i == n && j == n){
+            
+            arr[i][j] = 1;
+            ArrayList<Integer> list = new ArrayList<>();
+            for(int k=0; k<=n; k++){
+                for(int l=0; l<=n; l++){
+                    list.add(arr[k][l]);
+                }
+            }
+            path.add(list);
+            return;
+        }
+        if(i < 0 || j < 0 || i > n || j > n || arr[i][j] == 1 || maze[i][j] == 0) return;
+        arr[i][j] = 1;
+        AllPaths(maze, i-1, j, n, arr);
+        AllPaths(maze, i+1, j, n, arr);
+        AllPaths(maze, i, j-1, n, arr);
+        AllPaths(maze, i, j+1, n, arr);
+        arr[i][j] = 0;
+    }
+}
