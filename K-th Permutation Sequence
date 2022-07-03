@@ -1,0 +1,30 @@
+import java.util.*;
+
+public class Solution {
+    
+    public static String kthPermutation(int n, int k) {
+        
+        List<Integer> list = new LinkedList<>();
+        int fact = 1;
+        
+        for(int i=1; i<=n; i++){
+            
+            fact *= i;
+            list.add(i);
+        }
+        k--;
+        String s = "";
+        
+        while(list.size() != 0){
+            
+            fact /= list.size();
+            int i = k/fact;
+            
+            s += list.get(i);
+            list.remove(i);
+            
+            k = k%fact;
+        }
+        return s;
+    }
+}
