@@ -1,0 +1,21 @@
+import java.util.* ;
+import java.io.*; 
+import java.util.ArrayList;
+
+public class Solution {
+    
+    public static ArrayList<Integer> majorityElementII(ArrayList<Integer> arr) {
+        
+        int[] count = new int[100001];
+        for(int i: arr) count[i]++;
+        
+        ArrayList<Integer> list = new ArrayList<>();
+        int t = (int)Math.floor(arr.size()/3);
+        
+        for(int i=1; i<=100000; i++){
+            
+            if(count[i] > t) list.add(i);
+        }
+        return list;
+    }
+}
