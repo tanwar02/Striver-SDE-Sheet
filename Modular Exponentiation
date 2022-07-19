@@ -1,0 +1,15 @@
+import java.util.* ;
+import java.io.*; 
+public class Solution {
+    
+    public static int modularExponentiation(int x, int n, int m) {
+        
+        return (int)exp(x%m, n, m);
+    }
+    private static long exp(long x, int n, int m){
+        
+        if(n == 1) return x;
+        if(n % 2 == 0) return exp((x*x) % m, n/2, m);
+        return (x * exp(x, n-1, m)) % m;
+    }
+}
